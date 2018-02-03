@@ -1,0 +1,48 @@
+  uniqueValidator = function(value, callback) {
+        if (!value || 0 === value.length) {
+          callback(false);
+        }
+        else{
+          var data = this.instance.getDataAtCol(this.col);
+          data = $.map(data, function(n,i){ if(n!=null){return n.toLowerCase();} });
+          var sortedData = this.instance.getPlugin('columnSorting');
+          var index = sortedData.translateRow(data.indexOf(value.toLowerCase()));
+          if (index > -1 && this.row !== index) {
+            callback(false);
+          }
+          else{
+            $.ajax({
+            type: 'GET',
+            url: $('#products').attr('data-url'),
+            datatype: 'json',
+            data: { value: value },
+            success: function(boolean){
+              if (boolean == true){
+                callback(false)
+              }
+              else{
+                callback(true)
+              }
+            }
+            });
+          }
+        }
+      };
+
+
+
+
+
+          @mandatory_fields = template.default_fields
+                                .order('id')
+                                .where(mandatory: true)
+                                .pluck(:label_name)
+                                .reject(&:blank?)
+
+          @only_visible_fields = template.default_fields
+                                .order('id')
+                                .where(mandatory: false)
+                                .where(visible: true)
+                                .where(field_type: [:list, :custom])
+                                .pluck(:label_name)
+                                .reject(&:blank?)
