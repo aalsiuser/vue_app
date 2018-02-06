@@ -1,12 +1,10 @@
-import Vue from 'vue'
-import Team from '../components/teams/main.vue'
+import Vue from "vue/dist/vue.js"; //defined path here instead of using alias in development.js
+import App from "../App.vue";
+import router from "../router";
 
-document.addEventListener('DOMContentLoaded', () => {
-  const el = document.body.appendChild(document.createElement('hello'))
-  const app = new Vue({
-    el,
-    render: h => h(Team)
-  })
-
-  console.log(app)
-})
+new Vue({
+  el: "#app",
+  router,
+  components: { App },
+  template: "<App/>"
+});

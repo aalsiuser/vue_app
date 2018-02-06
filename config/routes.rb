@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources 'teams'
-
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get '*path', to: 'teams#index', constraints: ->(request) do
+    !request.xhr? && request.format.html?
+  end
 end
