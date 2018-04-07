@@ -10,4 +10,16 @@ module.exports = {
     loader: 'vue-loader',
     options: { extractCSS }
   }]
-}
+},
+module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      }
+    ]
+  }
+};
