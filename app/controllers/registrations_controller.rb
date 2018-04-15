@@ -1,9 +1,13 @@
-class RegistrationsController < ApplicationController
-  before_action :authenticate_user!, :redirect_unless_admin, only: [:new, :create]
+class RegistrationsController < Devise::RegistrationsController
+  before_action :authenticate_user!, only: [:new, :create]
   skip_before_action :require_no_authentication
 
   clear_respond_to
   respond_to :json
+  def create
+    binding.pry
+    User.create(user_params)
+  end
 
   private
 
@@ -13,5 +17,9 @@ class RegistrationsController < ApplicationController
 
   def sign_up(_resource_name, _resource)
     true
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :password)
   end
 end
